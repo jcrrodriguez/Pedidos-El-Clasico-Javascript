@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "pedidos-el-clasico"
+  },
+  "targets": {
+    "pedidos-el-clasico": {
+      "hosting": {
+        "Pedidos-Clasico": [
+          "pedidos-el-clasico"
+        ]
+      }
+    }
+  }
+}
