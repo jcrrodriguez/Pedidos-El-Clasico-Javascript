@@ -1,6 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
-import { Observable, subscribeOn } from 'rxjs';
+import { Component } from '@angular/core';
 import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
@@ -9,22 +7,24 @@ import { PedidosService } from 'src/app/services/pedidos.service';
   styleUrls: ['./crear-pedidos.component.css']
 })
 export class CrearPedidosComponent {
+  pedidos$ = this.pedidosService.pedidos$;
 
-  pedidos$: Observable<any[]>;
-  
-
-
-  constructor(private pedidosService: PedidosService, private firestore: Firestore) {
-    const pCollection = collection(this.firestore, 'pedidos');
-    this.pedidos$ = collectionData(pCollection);
-   }
+  constructor(private pedidosService: PedidosService) { }
 
   addPedido(pedido: string) {
     this.pedidosService.addPedido({ name: pedido }).then(() => {
-      console.log('Item added successfully!');  
+      console.log('Item added successfully!');
     }).catch((error) => {
       console.error('Error adding item: ', error);
     });
   }
 
+  deletePedido(pedidoId: string) {
+    this.pedidosService.deletePedido(pedidoId).then(() => {
+      console.log('Item deleted successfully!');
+    }).catch((error) => {
+      console.error('Error deleting item: ', error);
+    });
+  }
 }
+
