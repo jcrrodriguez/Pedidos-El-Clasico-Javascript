@@ -11,6 +11,8 @@ import { CrearPedidosComponent } from './pedidos/crear-pedidos/crear-pedidos.com
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { ListPedidosComponent } from './pedidos/list-pedidos/list-pedidos.component';
+import { PedidoComponent } from './pedidos/pedido/pedido.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     AuthComponent,
     LoginComponent,
     NavComponent,
-    CrearPedidosComponent
+    CrearPedidosComponent,
+    ListPedidosComponent,
+    PedidoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { FieldValue, serverTimestamp } from '@angular/fire/firestore';
+import { EMPTY, Observable } from 'rxjs';
+import { Pedido } from 'src/app/core/models';
 import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
@@ -7,14 +10,24 @@ import { PedidosService } from 'src/app/services/pedidos.service';
   styleUrls: ['./crear-pedidos.component.css']
 })
 export class CrearPedidosComponent {
-  pedidos$ = this.pedidosService.pedidos$;
+  pedidos$: Observable<any[]> = EMPTY;
 
-  constructor(private pedidosService: PedidosService) { }
+  constructor(private pedidosService: PedidosService) {
+  }
+  
+  ngOnInit() {
+    this.pedidosService.getPedidosHoy();
+    this.pedidos$ = this.pedidosService.pedidos$;
+  }
 
-  addPedido(pedido: string) {
-    this.pedidosService.addPedido({ name: pedido }).then(() => {
-      console.log('Item added successfully!');
-    }).catch((error) => {
+
+  addPedido(namePedido: string) {
+    const pedido: Pedido = {
+      name: namePedido,
+      date: serverTimestamp() as FieldValue
+    };
+  
+    this.pedidosService.addPedido(pedido).catch((error) => {
       console.error('Error adding item: ', error);
     });
   }

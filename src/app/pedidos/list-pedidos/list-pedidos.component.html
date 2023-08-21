@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="title mb-2">
+        <h2>Lista de Pedidos</h2>
+    </div>
+</div>
+
+<div class="row d-flex justify-content-center g-0 p-3">
+    <div class="col-10 d-flex flex-column gap-3">
+        <button class="btn-clasico" routerLink="/pedido" *ngFor="let pedido of pedidos$ |async">{{pedido.date.toDate() | date:'dd/MM/yyyy'}}</button>
+    </div>
+</div>

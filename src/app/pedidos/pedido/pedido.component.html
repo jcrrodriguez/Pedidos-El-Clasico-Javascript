@@ -1,27 +1,21 @@
 <div class="container">
     <div class="title">
-        <h2>Crear Pedido</h2>
+        <h2>Pedidos del día: </h2>
     </div>
 </div>
 
-<div class="row g-0">
-    <div class="col-md-6 col-sm-12">
-        <div class="list-container-add">
-            <input type="text" name="Agregar producto" #productInput placeholder="Producto">
-            <button class="btn-clasico" (click)="addPedido(productInput.value)">AGREGAR A LA LISTA</button>
-        </div>
-    </div>
-    <div class="col-md-6 col-sm-12" id="listaPedidos">
+<div class="row g-0 d-flex justify-content-center">
+    <div class="col-10" id="listaPedidos">
         <ul class="list-container">
             <li class="product" *ngFor="let pedido of pedidos$ | async">
                 <span class="product-name">{{pedido.name}}</span>
                 <span class="product-date" *ngIf="pedido.date">{{pedido.date.toDate() | date:'dd/MM/yyyy'}}</span>
-                <svg (click)="deletePedido(pedido.id)" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                    fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                <!-- <svg (click)="deletePedido(pedido.id)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-x-circle" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                     <path
                         d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                </svg>
+                </svg> -->
             </li>
         </ul>
     </div>
