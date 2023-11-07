@@ -23,19 +23,6 @@ export class PedidosService {
     this.pedidos$ = collectionData(q, { idField: 'id' });
   }
 
-  getPedidosByDate(date: Date): void {
-    const start = Timestamp.fromDate(startOfDay(date));
-    const end = Timestamp.fromDate(endOfDay(date));
-  
-    const q = query(
-      this.collectionRef,
-      where('date', '>=', start),
-      where('date', '<=', end)
-    );
-  
-    this.pedidos$ = collectionData(q, { idField: 'id' });
-  }
-
   getPedidosHoy(): void {
     const todayStart = Timestamp.fromDate(startOfDay(new Date()));
     const todayEnd = Timestamp.fromDate(endOfDay(new Date()));
@@ -49,6 +36,35 @@ export class PedidosService {
     this.pedidos$ = collectionData(q, { idField: 'id' });
   }
 
+  getSelectedPedidos(selectedDate: string): void {
+    const q = query(
+      this.collectionRef,
+      where('humanReadableDate', '==', selectedDate)
+    );
+
+    this.pedidos$ = collectionData(q, { idField: 'id' });
+  }
+
+  convertTimestamp(timestamp: Timestamp): string {
+    let date = timestamp.toDate();
+    let dd: string = date.getDate().toString();
+    let mm: string = (date.getMonth() + 1).toString(); // Adding 1 to get the correct month (January is 0)
+    let yyyy: string = date.getFullYear().toString();
+  
+    // Pad the day and month with leading zeros if necessary
+    if (dd.length === 1) {
+      dd = '0' + dd;
+    }
+    if (mm.length === 1) {
+      mm = '0' + mm;
+    }
+  
+    const formattedDate = `${dd}/${mm}/${yyyy}`;
+    console.log('Formatted Date:', formattedDate);
+  
+    return formattedDate;
+  }
+    
   addPedido(pedido: Pedido): Promise<any> {
     return addDoc(this.collectionRef, pedido)
       .catch((error) => {

@@ -6,6 +6,6 @@
 
 <div class="row d-flex justify-content-center g-0 p-3">
     <div class="col-10 d-flex flex-column gap-3">
-        <button class="btn-clasico" routerLink="/pedido" *ngFor="let pedido of pedidos$ |async">{{pedido.date.toDate() | date:'dd/MM/yyyy'}}</button>
+        <button class="btn-clasico" [routerLink]="['/pedido', date]" *ngFor="let date of uniqueDates">{{ date }}</button>
     </div>
 </div>

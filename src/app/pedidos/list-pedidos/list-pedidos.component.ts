@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, map } from 'rxjs';
 import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
@@ -7,15 +7,26 @@ import { PedidosService } from 'src/app/services/pedidos.service';
   templateUrl: './list-pedidos.component.html',
   styleUrls: ['./list-pedidos.component.css']
 })
+
 export class ListPedidosComponent implements OnInit {
   pedidos$: Observable<any[]> = EMPTY;
+  uniqueDates: string[] = [];
 
   constructor(private pedidosService: PedidosService) {
   }
 
   ngOnInit() {
     this.pedidosService.getAllPedidos();
-    this.pedidos$ = this.pedidosService.pedidos$;
+    this.pedidos$ = this.pedidosService.pedidos$.pipe(
+      map(pedidos => {
+        this.uniqueDates = [...new Set(pedidos.map(pedido => this.pedidosService.convertTimestamp(pedido.date)))];
+        return pedidos;
+      })
+    );
+
+    this.pedidos$.subscribe();
   }
   
+
+
 }

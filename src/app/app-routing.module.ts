@@ -19,7 +19,7 @@ const routes: Routes = [
     component: ListPedidosComponent
   },
   {
-    path: 'pedido',
+    path: 'pedido/:date',
     component: PedidoComponent
   }
 ];
