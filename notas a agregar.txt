@@ -1,13 +1,9 @@
--Definir diferencia de UI entre Maipu y Cordoba
--Filtrar productos por date descending order
 -Agregar validaciones:
-*Al crear pedido (que el campo no esté vacío, maximo caracteres 25, no caracteres especiales)
 *25 productos maximos por dia
 *no permitir mas de 2 productos iguales (significa que ya esta pedido o no hay stock)
--Colocar titulo de pedidos del día ********
-
 
 MAIPU
+-Definir diferencia de UI entre Maipu y Cordoba
 -Agregar botones de pedido enviado/sin stock
 -Si no hay stock de un producto, agregar a la lista de sin stock
 

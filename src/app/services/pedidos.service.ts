@@ -39,6 +39,7 @@ export class PedidosService {
   getSelectedPedidos(selectedDate: string): void {
     const q = query(
       this.collectionRef,
+      orderBy('date', 'desc'),
       where('humanReadableDate', '==', selectedDate)
     );
 
