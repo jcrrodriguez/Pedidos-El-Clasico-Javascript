@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Firestore, Timestamp, addDoc, collection, collectionData, deleteDoc, doc, orderBy, query, where } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 import { startOfDay, endOfDay } from 'date-fns';
+import { subMonths } from 'date-fns';
 import { Pedido } from '../core/models';
 
 
@@ -51,7 +52,7 @@ export class PedidosService {
     let dd: string = date.getDate().toString();
     let mm: string = (date.getMonth() + 1).toString(); // Adding 1 to get the correct month (January is 0)
     let yyyy: string = date.getFullYear().toString();
-  
+
     // Pad the day and month with leading zeros if necessary
     if (dd.length === 1) {
       dd = '0' + dd;
@@ -59,13 +60,34 @@ export class PedidosService {
     if (mm.length === 1) {
       mm = '0' + mm;
     }
-  
+
     const formattedDate = `${dd}/${mm}/${yyyy}`;
-    console.log('Formatted Date:', formattedDate);
-  
     return formattedDate;
   }
-    
+
+  isProductRepeated(name: string): Observable<boolean> {
+    const q = query(
+      this.collectionRef,
+      where('name', '==', name),
+    );
+
+    return collectionData(q).pipe(
+      map((pedidos) => pedidos.length > 0),
+      take(1)
+    );
+  }
+
+  pedidosThreeMonth(): Observable<any[]> {
+    const threeMonthsAgo = Timestamp.fromDate(subMonths(new Date(), 3));
+
+    const q = query(
+      this.collectionRef,
+      where('date', '<', threeMonthsAgo)
+    );
+
+    return collectionData(q, { idField: 'id' });
+  };
+
   addPedido(pedido: Pedido): Promise<any> {
     return addDoc(this.collectionRef, pedido)
       .catch((error) => {
@@ -77,7 +99,6 @@ export class PedidosService {
   deletePedido(pedidoId: string): Promise<void> {
     const pedidoRef = doc(this.firestore, 'pedidos', pedidoId);
     return deleteDoc(pedidoRef)
-      .then(() => console.log('Pedido eliminado!'))
       .catch((error) => {
         console.error('Error eliminando pedido: ', error);
         throw error;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EMPTY, Observable, map } from 'rxjs';
+import { EMPTY, Observable, map, tap } from 'rxjs';
 import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
@@ -21,7 +21,8 @@ export class ListPedidosComponent implements OnInit {
       map(pedidos => {
         this.uniqueDates = [...new Set(pedidos.map(pedido => this.pedidosService.convertTimestamp(pedido.date)))];
         return pedidos;
-      })
+      }),
+      tap(x => console.log(x))
     );
 
     this.pedidos$.subscribe();

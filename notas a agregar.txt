@@ -1,7 +1,3 @@
--Agregar validaciones:
-*25 productos maximos por dia
-*no permitir mas de 2 productos iguales (significa que ya esta pedido o no hay stock)
-
 MAIPU
 -Definir diferencia de UI entre Maipu y Cordoba
 -Agregar botones de pedido enviado/sin stock
